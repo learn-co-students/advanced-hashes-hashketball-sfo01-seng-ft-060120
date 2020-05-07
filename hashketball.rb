@@ -1,4 +1,5 @@
 # Write your code below game_hash
+require 'pry'
 def game_hash
   {
     home: {
@@ -126,4 +127,88 @@ def game_hash
   }
 end
 
-# Write code here
+
+
+def num_points_scored(player_name)
+game_hash.each do |team_place, team_info|
+  team_info[:players].each do |player|
+    if player[:player_name] == player_name
+      return player[:points]
+  # binding.pry
+      end
+    end
+  end
+end
+
+def shoe_size(player_name)
+  game_hash.each do |team_place, team_info|
+    team_info[:players].each do |player|
+      if player[:player_name] == player_name
+        return player[:shoe]
+  # binding.pry
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  game_hash.each do |team_place, team_info|
+    if team_info[:team_name].include? team_name
+      return team_info[:colors]
+  # binding.pry
+    end 
+  end
+end
+
+def team_names
+ home_away_team = [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+ return home_away_team
+ binding.pry
+end
+
+def player_numbers(team_name)
+  game_hash.each do |team_place, team_info|
+    if team_info[:team_name] == team_name 
+    return team_info[:players].map{ |player| player[:number]}
+    end
+  end
+end
+# since team_info itereates over the keys of team_name:, colors:, & players: 
+#if we ask for the [:players] key and iterate over it with map (meaning map will touch everything in players)
+# using player to be the keys inside our :players to iterate we ask map to find the values of :number and return them in an array
+
+
+def player_stats(name)
+  game_hash.each do |team_place, team_info|
+    team_info[:players].each do |player|
+      if player[:player_name] == name 
+        return player.delete_if { |key, value|
+        # binding.pry
+          [:player_name].include?! key}
+      # binding.pry
+    end
+    end
+  end
+end
+
+
+
+def big_shoe_rebounds
+  large_shoe = 0 
+  rebounds = 0
+  game_hash.each do |place, info|
+    info[:players].each do |player|
+         size_shoe = player[:shoe]
+         #we assign player[:shoe] to size_shoe, if we don't, we raise a TypeError:  no implicit conversion of Integer into Hash
+        if size_shoe > large_shoe
+         large_shoe = size_shoe
+         rebounds = player[:rebounds]
+        # binding.pry
+         end
+      end
+    end
+    rebounds
+  end
+
+
+

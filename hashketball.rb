@@ -1,3 +1,4 @@
+require "pry"
 # Write your code below game_hash
 def game_hash
   {
@@ -126,4 +127,145 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(scorer)
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.is_a?(String) 
+        data.split('').each do |data_items|
+        end 
+      elsif data.is_a?(Array)
+        data.each do |element|
+          if element.is_a?(String)
+            element.split('').each do |element_items|
+            end
+          elsif element.is_a?(Hash)
+            element.each do |data_type, player_stat|
+              if player_stat == scorer
+                return element[:points]
+              end 
+            end 
+          end 
+        end 
+      end 
+    end
+  end
+end
+
+def shoe_size (player_name)
+    game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.is_a?(String) 
+        data.split('').each do |data_items|
+        end 
+      elsif data.is_a?(Array)
+        data.each do |element|
+          if element.is_a?(String)
+            element.split('').each do |element_items|
+            end
+          elsif element.is_a?(Hash)
+            element.each do |data_type, player_stat|
+              if player_stat == player_name
+                return element[:shoe]
+              end 
+            end 
+          end 
+        end 
+      end 
+    end
+  end
+end 
+
+def team_colors(team_name)
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data == team_name
+        return game_hash[location][:colors]
+      end 
+    end 
+  end 
+end 
+
+def team_names 
+  team_array = []
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if attribute == :team_name
+        team_array << data
+      end 
+    end 
+  end 
+  team_array
+end 
+
+def player_numbers (team_name)
+  jersey_numbers = []
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data == team_name
+        game_hash[location][:players].each do |players|
+          players.each do |data_type, player_stat|
+            if data_type == :number
+              jersey_numbers << player_stat
+            end 
+          end 
+        end
+      end 
+    end 
+  end 
+  jersey_numbers
+end 
+
+def player_stats(player_name)
+  stats = {}
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.is_a?(String) 
+        data.split('').each do |data_items|
+        end 
+      elsif data.is_a?(Array)
+        data.each do |element|
+          if element.is_a?(String)
+            element.split('').each do |element_items|
+            end
+          elsif element.is_a?(Hash)
+            element.each do |data_type, player_stat|
+              if player_stat == player_name
+                stats = element
+              end 
+            end 
+          end 
+        end 
+      end 
+    end
+  end
+  stats 
+end
+  
+def big_shoe_rebounds
+  shoe_size = 0 
+  rebound = 0 
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.is_a?(String) 
+        data.split('').each do |data_items|
+        end 
+      elsif data.is_a?(Array)
+        data.each do |element|
+          if element.is_a?(String)
+            element.split('').each do |element_items|
+            end
+          elsif element.is_a?(Hash)
+            element.each do |data_type, player_stat|
+              if element[:shoe] > shoe_size
+                shoe_size = element[:shoe]
+                rebound = element[:rebounds]
+              end
+            end 
+          end 
+        end 
+      end 
+    end
+  end
+  rebound
+end
+
